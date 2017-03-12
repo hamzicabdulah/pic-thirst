@@ -3,7 +3,8 @@
 (function () {
 
    var pics = document.querySelector('.grid');
-   var apiUrl = appUrl + '/api/pics';
+   var currentUrl = window.location.href;
+   var apiUrl = currentUrl === appUrl + '/' || currentUrl === appUrl + '/login' ? appUrl + '/api/pics' : '/api/mypics';
    
    function masonryLoad () {
       var msnry = new Masonry(pics, {
