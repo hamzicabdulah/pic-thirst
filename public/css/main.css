@@ -1,0 +1,144 @@
+html, body {
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  background: #123E4E;
+  color: #ffffe6;
+  font-family: 'Oswald', sans-serif;
+}
+.navbar {
+  background: #b0681c;
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: space-between;
+  padding: .5em 0;
+}
+.navbar > h1 {
+  font-family: 'Kaushan Script', cursive;
+  margin: 0 1em;
+}
+.navbar a {
+  text-decoration: none;
+}
+.btn {
+  margin: .2em 1em 0;
+  height: 3.5em;
+  border: none;
+  background: #b0681c;
+  outline: none;
+  cursor: pointer;
+}
+.btn > p {
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+}
+#login-btn > p {
+  position: relative;
+  bottom: 1em;
+}
+.container {
+  margin: 0 auto;
+  width: 84%;
+}
+.grid {
+  margin: 0 auto;
+}
+.grid-item { 
+  margin: .36em;
+  background: #ffffe6;
+  width: 12.3em;
+  text-align: center;
+}
+.grid-item > img {
+  width: 94%;
+  margin: .3em 0 0;
+}
+.grid-item > div {
+  background: #b0681c;
+  padding: .2em .5em .5em;
+}
+.title {
+  margin: 0 auto;
+}
+.grid-item h5 {
+  margin-top: .5em;
+  margin-bottom: 0;
+  display: inline-block;
+}
+.posted {
+  margin-right: 3em;
+}
+.likes > i {
+  margin-right: .3em;
+  cursor: pointer;
+}
+.form-div {
+  visibility: hidden;
+  opacity: 0;
+  background: #d0e1e1;
+  color: #1a1a1a;
+  border-radius: 5%;
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  width: 20em; 
+  height: 18em; 
+  margin-top: -9em; 
+  margin-left: -10em;
+  text-align: center;
+  z-index: 2;
+  -webkit-transition: all .7s;
+  transition: all .7s;
+}
+.form-div-vis {
+  visibility: visible;
+  opacity: 1;
+}
+.dark-div {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  background: black;
+  visibility: hidden;
+  transition: all .7s;
+}
+.dark-div-vis {
+  visibility: visible;
+  opacity: .75;
+}
+.form-div > i {
+  float: right;
+  margin-right: .5em;
+  margin-top: .4em;
+  cursor: pointer;
+}
+.form-div > h2 {
+  clear: both;
+}
+form {
+  position: absolute;
+  top: 50%; 
+  height: 9em; 
+  width: 20em;
+  margin-top: -3em;
+}
+label {
+  display: block;
+  font-size: 1.5em;
+}
+input {
+  font-size: 82%;
+}
+.submit {
+  margin-top: 3em;
+  background: #b0681c;
+  font-family: 'Oswald', sans-serif;
+  padding: .4em .8em;
+}
