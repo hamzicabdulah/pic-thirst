@@ -12,12 +12,25 @@ function ClickHandler () {
         });
     };
     
-    this.getMyPics = function (req, res) {
-        Images.find({posted: req.user.github.displayName}, {'_id': false}).exec(function (err, result) {
+    this.checkUser = function (req, res) {
+        Images.find({posted: req.params.user}, {'_id': false}).exec(function (err, result) {
+            if (err) throw err;
+            if (result.length > 0) {
+                if (req.isAuthenticated()) 
+                    res.sendFile(process.cwd() + '/public/index.html');
+                else
+                    res.sendFile(process.cwd() + '/public/login.html');
+            }
+            else res.redirect('/');
+        });
+    };
+    
+    this.getUserPics = function (req,  res) {
+        Images.find({posted: req.params.user}, {'_id': false}).exec(function (err, result) {
             if (err) throw err;
             res.json(result);
         });
-    }
+    };
     
     this.postPic = function (req, res) {
         var image = new Images({
@@ -28,7 +41,15 @@ function ClickHandler () {
         });
         image.save(function (err, doc) {
             if (err) throw err;
-            res.redirect('/');
+            res.redirect('/login');
+        });
+    };
+    
+    this.removePic = function (req, res) {
+        Images.findOneAndRemove({title: req.params.title})
+        .exec(function (err, result) {
+            if (err) throw err;
+            res.json(result);
         });
     };
     

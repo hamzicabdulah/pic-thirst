@@ -3,8 +3,13 @@
 (function () {
 
    var pics = document.querySelector('.grid');
-   var currentUrl = window.location.href;
-   var apiUrl = currentUrl === appUrl + '/' || currentUrl === appUrl + '/login' ? appUrl + '/api/pics' : '/api/mypics';
+   var currentUrl = window.location.href, apiUrl;
+   
+   if (currentUrl === appUrl + '/' || currentUrl === appUrl + '/login') {
+      apiUrl =  appUrl + '/api/pics';
+   } else {
+      apiUrl = appUrl + '/api/' + currentUrl.split('/')[3];
+   }
    
    function masonryLoad () {
       var msnry = new Masonry(pics, {
@@ -43,12 +48,14 @@
          picsObject.forEach(function(item) {
             iconClass = user ? heartIconClass(item, user) : 'fa-heart-o ' + item.title.split(' ').join('-');
             var newDiv = document.createElement("div");
+            var trashVisibility = 'hidden';
+            if (user && user.displayName === item.posted) trashVisibility = 'visible'; 
             newDiv.className = 'grid-item';
-            newDiv.innerHTML = '<img src="' + item.url + '" onerror="this.src = \'https://cdn.hyperdev.com/us-east-1%3A60e6615e-7d9e-47ac-903b-3b4b47372e42%2Fplaceholder.png\'" alt="' 
+            newDiv.innerHTML = '<img src="' + item.url + '" onerror="this.src = \'https://www.axure.com/c/attachments/forum/7-0-general-discussion/3919d1401387174-turn-placeholder-widget-into-image-maintain-interactions-screen-shot-2014-05-29-10.46.57-am.png\'" alt="' 
                                  + item.title + '"></img><div><h3 class="title">' 
-                                 + item.title + '</h3><h5 class="posted">' + item.posted 
-                                 + '</h5><h5 class="likes ' + item.title.split(' ').join('-') +'"><i class="fa ' + iconClass 
-                                 + '" aria-hidden="true"></i>' 
+                                 + item.title + '</h3><h5 class="posted">' + '<a href="' + appUrl + '/' + item.posted + '">' 
+                                 + item.posted + '</a>' + '</h5><h5 class="likes ' + item.title.split(' ').join('-') 
+                                 +'"><i class="fa fa-trash-o trash-' + item.title.split(' ').join('-') + '" style="visibility:' + trashVisibility + '"></i><i class="fa ' + iconClass + '" aria-hidden="true"></i>' 
                                  + '<span class="likes-num">' + item.likes.length + '</span>' + '<h5></div>';
             pics.appendChild(newDiv);
             counter++;
@@ -64,6 +71,17 @@
                }, 400);
             }
          });  
+         
+         document.querySelector('.my-pics').setAttribute('href', '/' + user.displayName);
+         
+         var trashes = document.querySelectorAll('.fa-trash-o');
+         for (var i = 0; i < trashes.length; i++) {
+            trashes[i].addEventListener('click', function () {
+               var title = this.className.split(' ').slice(2).join(' ').split('-').slice(1).join(' ');
+               ajaxFunctions.ajaxRequest('DELETE', appUrl + '/api/pic/' + title, function (data) {location.reload()});
+            });
+         }
+         
          var nonLiked = document.querySelectorAll('.fa-heart-o');
          var liked = document.querySelectorAll('.fa-heart');
          var hearts = [];

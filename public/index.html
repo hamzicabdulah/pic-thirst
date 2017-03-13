@@ -10,8 +10,8 @@
 
    <body>
         <div class="navbar">
-            <h1>Pic Thirst</h1>
-            <div>
+            <a href="/"><h1>Pic Thirst</h1></a>
+            <div class="navbar-links">
                 <a class="all-pics" href='/'>
                     <button class="btn" id="all-pics">
                         <p>ALL PICS</p>
@@ -31,6 +31,9 @@
                     </button>
                 </a>
             </div>
+            <div class="navbar-toggle">
+                <span></span><span></span><span></span>
+            </div>
         </div>
         
         <div class="container"> 
@@ -42,13 +45,14 @@
             <h2>Add a pic</h2>
             <form method='post' action='/api/pics'>
                 <label for="url">Link: <input type="text" name="url" id="url" required/></label>
-                <label for="title">Title: <input type="text" name="title" id="title"required/></label>
+                <label for="title">Title: <input type="text" name="title" id="title" maxlength="50" required/></label>
                 <input type="submit" class="submit" value="SUBMIT"/>
             </form>
         </div>
         
         <div class="dark-div"></div>
         
+        <script type="text/javascript" src="controllers/navbarController.client.js"></script>
         <script type="text/javascript" src="common/ajax-functions.js"></script>
         <script type="text/javascript" src="controllers/clickController.client.js"></script>
         <script type="text/javascript" src="controllers/modalController.client.js"></script>

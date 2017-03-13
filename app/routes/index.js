@@ -39,13 +39,23 @@ module.exports = function (app, passport) {
         .get(clickHandler.getPics)
         .post(isLoggedIn, clickHandler.postPic);
         
-    app.route('/my-pics')
-        .get(isLoggedIn, function (req, res) {
-            res.sendFile(process.cwd() + '/public/my-pics.html');
+    app.route('/api/pic/:title')
+        .delete(clickHandler.removePic);
+        
+    app.route('/api/current-user')
+        .get(function (req, res)  {
+            if (req.isAuthenticated()) {
+                res.json(req.user.github);
+            } else {
+                res.send(false);    
+            }
         });
         
-    app.route('/api/mypics')
-        .get(clickHandler.getMyPics);
+    app.route('/:user')
+        .get(clickHandler.checkUser);
+    
+    app.route('/api/:user')
+        .get(clickHandler.getUserPics);
         
     app.route('/api/like/:title')
         .post(clickHandler.like);
@@ -58,13 +68,5 @@ module.exports = function (app, passport) {
             successRedirect: '/',
             failureRedirect: '/login'
         }));
-        
-    app.route('/api/current-user')
-        .get(function (req, res)  {
-            if (req.isAuthenticated()) {
-                res.json(req.user.github);
-            } else {
-                res.send(false);    
-            }
-        });
+    
 };
