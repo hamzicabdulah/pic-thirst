@@ -46,7 +46,7 @@ function ClickHandler () {
     };
     
     this.removePic = function (req, res) {
-        Images.findOneAndRemove({title: req.params.title})
+        Images.findByIdAndRemove(req.params.id)
         .exec(function (err, result) {
             if (err) throw err;
             res.json(result);
@@ -54,18 +54,18 @@ function ClickHandler () {
     };
     
     this.like = function (req, res) {
-        Images.findOne({title: req.params.title})
+        Images.findById(req.params.id)
         .exec(function (err, result) {
             if (err) throw err;
             if (req.isAuthenticated()) {
                 if (result.likes.indexOf(req.user.github.displayName) < 0) {
-                    Images.findOneAndUpdate({title: req.params.title}, {$push: {likes: req.user.github.displayName}}, {new: true})
+                    Images.findByIdAndUpdate(req.params.id, {$push: {likes: req.user.github.displayName}}, {new: true})
                     .exec(function (err, result2) {
                         if (err) throw err;
                         res.json(result2);
                     }); 
                 } else {
-                    Images.findOneAndUpdate({title: req.params.title}, {$pull: {likes: req.user.github.displayName}}, {new: true})
+                    Images.findByIdAndUpdate(req.params.id, {$pull: {likes: req.user.github.displayName}}, {new: true})
                     .exec(function (err, result2) {
                         if (err) throw err;
                         res.json(result2);

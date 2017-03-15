@@ -39,7 +39,7 @@ module.exports = function (app, passport) {
         .get(clickHandler.getPics)
         .post(isLoggedIn, clickHandler.postPic);
         
-    app.route('/api/pic/:title')
+    app.route('/api/pic/:id')
         .delete(clickHandler.removePic);
         
     app.route('/api/current-user')
@@ -57,7 +57,7 @@ module.exports = function (app, passport) {
     app.route('/api/:user')
         .get(clickHandler.getUserPics);
         
-    app.route('/api/like/:title')
+    app.route('/api/like/:id')
         .post(clickHandler.like);
 
     app.route('/auth/github')
