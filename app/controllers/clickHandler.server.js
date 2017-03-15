@@ -6,14 +6,14 @@ var Images = require('../models/images.js');
 function ClickHandler () {
     
     this.getPics =  function (req, res) {
-        Images.find({}, {'_id': false}).exec(function (err, result) {
+        Images.find({}).exec(function (err, result) {
             if (err) throw err;
             res.json(result);
         });
     };
     
     this.checkUser = function (req, res) {
-        Images.find({posted: req.params.user}, {'_id': false}).exec(function (err, result) {
+        Images.find({posted: req.params.user}).exec(function (err, result) {
             if (err) throw err;
             if (result.length > 0) {
                 if (req.isAuthenticated()) 
@@ -26,7 +26,7 @@ function ClickHandler () {
     };
     
     this.getUserPics = function (req,  res) {
-        Images.find({posted: req.params.user}, {'_id': false}).exec(function (err, result) {
+        Images.find({posted: req.params.user}).exec(function (err, result) {
             if (err) throw err;
             res.json(result);
         });
@@ -54,7 +54,7 @@ function ClickHandler () {
     };
     
     this.like = function (req, res) {
-        Images.findOne({title: req.params.title}, { '_id': false })
+        Images.findOne({title: req.params.title})
         .exec(function (err, result) {
             if (err) throw err;
             if (req.isAuthenticated()) {
