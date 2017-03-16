@@ -13,16 +13,25 @@
     <body>
         <div class="navbar">
             <a href="/"><h1>Pic Thirst</h1></a>
-            <a href="/auth/github">
+            <a href="/login">
                 <button class="btn" id="login-btn">
-                    <img src="/public/img/github-logo.png" alt="github logo" />
                     <p>LOGIN</p>
                 </button>
             </a>
         </div>
         
-        <div class="container"> 
-            <div class="grid"></div>
+        <div>
+            <a href="/auth/github">
+                <button class="btn" id="login-btn">
+                    <img src="/public/img/github-logo.png" alt="github logo" />
+                    <p>LOGIN WITH GITHUB</p>
+                </button>
+            </a>
+            <a href="/auth/twitter">
+                <button class="btn" id="login-btn">
+                    <p>LOGIN WITH TWITTER</p>
+                </button>
+            </a>
         </div>
         
         <script type="text/javascript" src="common/ajax-functions.js"></script>

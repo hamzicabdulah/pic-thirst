@@ -10,30 +10,32 @@
 
    <body>
         <div class="navbar">
-            <h1>Pic Thirst</h1>
-            <div>
+            <a href="/"><h1>Pic Thirst</h1></a>
+            <div class="navbar-links">
                 <a class="all-pics" href='/'>
                     <button class="btn" id="all-pics">
                         <p>ALL PICS</p>
                     </button>
                 </a>
-                <a class="my-pics" href="/my-pics">
+                <a class="my-pics" href="/">
                     <button class="btn" id="my-pics">
                         <p>MY PICS</p>
                     </button>
                 </a>
-                <a class="add-pic">
-                    <button class="btn" id="add-pic">
-                        <p>ADD A PIC</p>
-                    </button>
-                </a>
-                <a class="logout" href="/logout">
+                <button class="btn" id="add-pic">
+                    <p>ADD A PIC</p>
+                </button>
+                <a class="menu" href="/logout">
                     <button class="btn" id="logout-btn">
                         <p>LOGOUT</p>
                     </button>
                 </a>
             </div>
+            <div class="navbar-toggle">
+                <span></span><span></span><span></span>
+            </div>
         </div>
+        
         <div class="container"> 
             <div class="grid"></div>
         </div>
@@ -42,14 +44,15 @@
             <i class="fa fa-times fa-1x"></i>
             <h2>Add a pic</h2>
             <form method='post' action='/api/pics'>
-                <label for="url">Link: <input type="text" name="url" id="url"/></label>
-                <label for="title">Title: <input type="text" name="title" id="title"/></label>
+                <label for="url">Link: <input type="text" name="url" id="url" required/></label>
+                <label for="title">Title: <input type="text" name="title" id="title" maxlength="50" required/></label>
                 <input type="submit" class="submit" value="SUBMIT"/>
             </form>
         </div>
         
         <div class="dark-div"></div>
         
+        <script type="text/javascript" src="controllers/navbarController.client.js"></script>
         <script type="text/javascript" src="common/ajax-functions.js"></script>
         <script type="text/javascript" src="controllers/clickController.client.js"></script>
         <script type="text/javascript" src="controllers/modalController.client.js"></script>

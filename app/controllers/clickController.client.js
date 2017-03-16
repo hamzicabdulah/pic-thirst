@@ -5,7 +5,7 @@
    var pics = document.querySelector('.grid');
    var currentUrl = window.location.href, apiUrl;
    
-   if (currentUrl === appUrl + '/' || currentUrl === appUrl + '/login') {
+   if (currentUrl === appUrl + '/') {
       apiUrl =  appUrl + '/api/pics';
    } else {
       apiUrl = appUrl + '/api/' + currentUrl.split('/')[3];
@@ -49,11 +49,11 @@
             iconClass = user ? heartIconClass(item, user) : 'fa-heart-o l' + item._id;
             var newDiv = document.createElement("div");
             var trashVisibility = 'hidden';
-            if (user && user.displayName === item.posted) trashVisibility = 'visible'; 
+            if (user && user.socialId === item.postedId) trashVisibility = 'visible'; 
             newDiv.className = 'grid-item';
             newDiv.innerHTML = '<img src="' + item.url + '" onerror="this.src = \'https://www.axure.com/c/attachments/forum/7-0-general-discussion/3919d1401387174-turn-placeholder-widget-into-image-maintain-interactions-screen-shot-2014-05-29-10.46.57-am.png\'" alt="' 
                                  + item.title + '"></img><div><h3 class="title">' 
-                                 + item.title + '</h3><h5 class="posted">' + '<a href="' + appUrl + '/' + item.posted + '">' 
+                                 + item.title + '</h3><h5 class="posted">' + '<a href="' + appUrl + '/' + item.postedId + '">' 
                                  + item.posted + '</a>' + '</h5><h5 class="likes l' + item._id 
                                  + '"><i class="fa fa-trash-o trash-' + item._id + '" style="visibility:' + trashVisibility + '"></i><i class="fa ' + iconClass + '" aria-hidden="true"></i>' 
                                  + '<span class="likes-num">' + item.likes.length + '</span>' + '<h5></div>';
@@ -72,7 +72,7 @@
             }
          });  
          
-         document.querySelector('.my-pics').setAttribute('href', '/' + user.displayName);
+         document.querySelector('.my-pics').setAttribute('href', '/' + user.socialId);
          
          var trashes = document.querySelectorAll('.fa-trash-o');
          for (var i = 0; i < trashes.length; i++) {

@@ -13,20 +13,20 @@ function ClickHandler () {
     };
     
     this.checkUser = function (req, res) {
-        Images.find({posted: req.params.user}).exec(function (err, result) {
+        Images.find({postedId: req.params.userId}).exec(function (err, result) {
             if (err) throw err;
-            if (result.length > 0) {
+            if (req.user && req.user.socialId === req.params.userId || result.length > 0) {
                 if (req.isAuthenticated()) 
-                    res.sendFile(process.cwd() + '/public/index.html');
+                    res.sendFile(process.cwd() + '/public/index-logged.html');
                 else
-                    res.sendFile(process.cwd() + '/public/login.html');
+                    res.sendFile(process.cwd() + '/public/index.html');
             }
             else res.redirect('/');
         });
     };
     
     this.getUserPics = function (req,  res) {
-        Images.find({posted: req.params.user}).exec(function (err, result) {
+        Images.find({postedId: req.params.userId}).exec(function (err, result) {
             if (err) throw err;
             res.json(result);
         });
@@ -36,12 +36,13 @@ function ClickHandler () {
         var image = new Images({
             url: req.body.url,
             title: req.body.title,
-            posted: req.user.github.displayName,
+            posted: req.user.displayName,
+            postedId: req.user.socialId,
             likes: []
         });
         image.save(function (err, doc) {
             if (err) throw err;
-            res.redirect('/login');
+            res.redirect('/');
         });
     };
     
@@ -58,14 +59,14 @@ function ClickHandler () {
         .exec(function (err, result) {
             if (err) throw err;
             if (req.isAuthenticated()) {
-                if (result.likes.indexOf(req.user.github.displayName) < 0) {
-                    Images.findByIdAndUpdate(req.params.id, {$push: {likes: req.user.github.displayName}}, {new: true})
+                if (result.likes.indexOf(req.user.displayName) < 0) {
+                    Images.findByIdAndUpdate(req.params.id, {$push: {likes: req.user.displayName}}, {new: true})
                     .exec(function (err, result2) {
                         if (err) throw err;
                         res.json(result2);
                     }); 
                 } else {
-                    Images.findByIdAndUpdate(req.params.id, {$pull: {likes: req.user.github.displayName}}, {new: true})
+                    Images.findByIdAndUpdate(req.params.id, {$pull: {likes: req.user.displayName}}, {new: true})
                     .exec(function (err, result2) {
                         if (err) throw err;
                         res.json(result2);

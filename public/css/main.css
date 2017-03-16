@@ -67,10 +67,6 @@ body {
   display: inline-block;
   font-family: 'Oswald', sans-serif;
 }
-#login-btn > p {
-  position: relative;
-  bottom: 1em;
-}
 .container {
   margin: 0 auto;
   width: 84%;

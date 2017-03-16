@@ -10,15 +10,19 @@ module.exports = function (app, passport) {
         if (req.isAuthenticated()) {
             return next();
         } else {
-            res.redirect('/login');
+            res.redirect('/');
         }
     }
 
     var clickHandler = new ClickHandler();
 
     app.route('/')
-        .get(isLoggedIn, function (req, res) {
-            res.sendFile(path + '/public/index.html');
+        .get(function (req, res) {
+            if (req.isAuthenticated()) {
+                res.sendFile(path + '/public/index-logged.html');
+            } else {
+                res.sendFile(path + '/public/index.html');
+            }
         });
         
     app.route('/login')
@@ -32,7 +36,7 @@ module.exports = function (app, passport) {
     app.route('/logout')
         .get(function (req, res) {
             req.logout();
-            res.redirect('/login');
+            res.redirect('/');
         });
         
     app.route('/api/pics')
@@ -45,16 +49,16 @@ module.exports = function (app, passport) {
     app.route('/api/current-user')
         .get(function (req, res)  {
             if (req.isAuthenticated()) {
-                res.json(req.user.github);
+                res.json(req.user);
             } else {
                 res.send(false);    
             }
         });
         
-    app.route('/:user')
+    app.route('/:userId')
         .get(clickHandler.checkUser);
     
-    app.route('/api/:user')
+    app.route('/api/:userId')
         .get(clickHandler.getUserPics);
         
     app.route('/api/like/:id')
@@ -68,5 +72,13 @@ module.exports = function (app, passport) {
             successRedirect: '/',
             failureRedirect: '/login'
         }));
-    
+        
+    app.route('/auth/twitter')
+        .get(passport.authenticate('twitter'));
+        
+    app.route('/auth/twitter/callback')
+        .get(passport.authenticate('twitter', {
+            successRedirect: '/',
+            failureRedirect: '/login'
+        }));
 };

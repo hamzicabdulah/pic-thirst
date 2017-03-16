@@ -5,5 +5,10 @@ module.exports = {
         'clientID': process.env.GITHUB_KEY,
         'clientSecret': process.env.GITHUB_SECRET,
         'callbackURL': process.env.APP_URL + 'auth/github/callback'
+    },
+    'twitterAuth': {
+        'consumerKey': process.env.TWITTER_KEY,
+        'consumerSecret': process.env.TWITTER_SECRET,
+        'callbackURL': process.env.APP_URL + 'auth/twitter/callback'
     }
 };
