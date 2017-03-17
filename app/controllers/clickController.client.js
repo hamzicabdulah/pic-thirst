@@ -5,7 +5,11 @@
    var pics = document.querySelector('.grid');
    var currentUrl = window.location.href, apiUrl;
    
-   if (currentUrl === appUrl + '/') {
+   if (currentUrl === appUrl + '/#_=_') {
+      window.location.hash = '';
+   }
+   
+   if (currentUrl === appUrl + '/' || currentUrl === appUrl + '/#_=_') {
       apiUrl =  appUrl + '/api/pics';
    } else {
       apiUrl = appUrl + '/api/' + currentUrl.split('/')[3];
@@ -19,7 +23,7 @@
    }
    
    function heartIconClass (object, user) {
-      if (object.likes.indexOf(user.displayName) >= 0) {
+      if (object.likes.indexOf(user.socialId) >= 0) {
          return "fa-heart l" + object._id;
       } else {
          return "fa-heart-o l" + object._id;
@@ -72,8 +76,6 @@
             }
          });  
          
-         document.querySelector('.my-pics').setAttribute('href', '/' + user.socialId);
-         
          var trashes = document.querySelectorAll('.fa-trash-o');
          for (var i = 0; i < trashes.length; i++) {
             trashes[i].addEventListener('click', function () {
@@ -93,6 +95,8 @@
                ajaxFunctions.ajaxRequest('POST', appUrl + '/api/like/' + id, updateLikes);
             });
          }
+         
+         document.querySelector('.my-pics').setAttribute('href', '/' + user.socialId);
       });
    }
 

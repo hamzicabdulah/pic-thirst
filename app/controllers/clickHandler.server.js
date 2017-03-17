@@ -36,7 +36,7 @@ function ClickHandler () {
         var image = new Images({
             url: req.body.url,
             title: req.body.title,
-            posted: req.user.displayName,
+            posted: req.user.username,
             postedId: req.user.socialId,
             likes: []
         });
@@ -59,14 +59,14 @@ function ClickHandler () {
         .exec(function (err, result) {
             if (err) throw err;
             if (req.isAuthenticated()) {
-                if (result.likes.indexOf(req.user.displayName) < 0) {
-                    Images.findByIdAndUpdate(req.params.id, {$push: {likes: req.user.displayName}}, {new: true})
+                if (result.likes.indexOf(req.user.socialId) < 0) {
+                    Images.findByIdAndUpdate(req.params.id, {$push: {likes: req.user.socialId}}, {new: true})
                     .exec(function (err, result2) {
                         if (err) throw err;
                         res.json(result2);
                     }); 
                 } else {
-                    Images.findByIdAndUpdate(req.params.id, {$pull: {likes: req.user.displayName}}, {new: true})
+                    Images.findByIdAndUpdate(req.params.id, {$pull: {likes: req.user.socialId}}, {new: true})
                     .exec(function (err, result2) {
                         if (err) throw err;
                         res.json(result2);

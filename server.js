@@ -8,6 +8,7 @@ var express = require('express'),
     bodyParser = require('body-parser');
 
 var app = express();
+//dotenv module is used for enabling reading hidden variables from a file named .env
 require('dotenv').load();
 require('./app/config/passport')(passport);
 

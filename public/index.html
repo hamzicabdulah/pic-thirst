@@ -13,17 +13,36 @@
     <body>
         <div class="navbar">
             <a href="/"><h1>Pic Thirst</h1></a>
-            <a href="/login">
-                <button class="btn" id="login-btn">
-                    <p>LOGIN</p>
-                </button>
-            </a>
+            <div class="navbar-links">
+                <a href="/auth/github">
+                    <button class="btn" id="login-btn">
+                        <i class="fa fa-github" aria-hidden="true"></i>
+                        <p>LOGIN WITH GITHUB</p>
+                    </button>
+                </a>
+                <a href="/auth/twitter">
+                    <button class="btn" id="login-btn">
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                        <p>LOGIN WITH TWITTER</p>
+                    </button>
+                </a>
+                <a href="/auth/facebook">
+                    <button class="btn" id="login-btn">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                        <p>LOGIN WITH FACEBOOK</p>
+                    </button>
+                </a>
+            </div>
+            <div class="navbar-toggle">
+                <span></span><span></span><span></span>
+            </div>
         </div>
         
         <div class="container"> 
             <div class="grid"></div>
         </div>
         
+        <script type="text/javascript" src="controllers/navbarController.client.js"></script>
         <script type="text/javascript" src="common/ajax-functions.js"></script>
         <script type="text/javascript" src="controllers/clickController.client.js"></script>
     </body>

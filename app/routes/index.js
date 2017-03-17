@@ -25,14 +25,6 @@ module.exports = function (app, passport) {
             }
         });
         
-    app.route('/login')
-        .get(function (req, res) {
-            if (req.isAuthenticated()) {
-                res.redirect('/');
-            } 
-            res.sendFile(path + '/public/login.html');
-        });
-        
     app.route('/logout')
         .get(function (req, res) {
             req.logout();
@@ -51,7 +43,7 @@ module.exports = function (app, passport) {
             if (req.isAuthenticated()) {
                 res.json(req.user);
             } else {
-                res.send(false);    
+                res.send({redirect: '/'});    
             }
         });
         
@@ -70,7 +62,7 @@ module.exports = function (app, passport) {
     app.route('/auth/github/callback')
         .get(passport.authenticate('github', {
             successRedirect: '/',
-            failureRedirect: '/login'
+            failureRedirect: '/'
         }));
         
     app.route('/auth/twitter')
@@ -79,6 +71,15 @@ module.exports = function (app, passport) {
     app.route('/auth/twitter/callback')
         .get(passport.authenticate('twitter', {
             successRedirect: '/',
-            failureRedirect: '/login'
+            failureRedirect: '/'
+        }));
+        
+    app.route('/auth/facebook')
+        .get(passport.authenticate('facebook'));
+        
+    app.route('/auth/facebook/callback')
+        .get(passport.authenticate('facebook', {
+            successRedirect: '/',
+            failureRedirect: '/'
         }));
 };

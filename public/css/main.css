@@ -20,7 +20,7 @@ body {
   margin: 0 1em;
   color: white;
 }
-.navbar a {
+a {
   text-decoration: none;
 }
 .navbar-toggle {
@@ -40,7 +40,7 @@ body {
   top: 3.9em;
   width: 10em;
   background: #b0681c;
-  z-index: 10;
+  z-index: 1;
   border: 2px solid;
   border-right: none;
   -webkit-transition: right .5s;
@@ -161,7 +161,7 @@ body {
 .form-div > h2 {
   clear: both;
 }
-form {
+.form-div > form {
   position: absolute;
   top: 50%; 
   height: 9em; 
@@ -188,6 +188,7 @@ input {
     position: static;
     width: auto;
     border: none;
+    z-index: auto;
   }
   .navbar-toggle {
     display: none;
