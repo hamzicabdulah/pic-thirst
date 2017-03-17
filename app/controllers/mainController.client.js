@@ -5,16 +5,19 @@
    var pics = document.querySelector('.grid');
    var currentUrl = window.location.href, apiUrl;
    
+   //Facebook authentication attaches '#_=_' to the url, so the url is changed here manually to the original on Facebook authentication
    if (currentUrl === appUrl + '/#_=_') {
-      window.location.hash = '';
+      window.location = '/';
    }
    
+   //If the url doesn't contain a user id, we send a request to the server for all the pics, and otherwise, we get only the pics by that specific user
    if (currentUrl === appUrl + '/' || currentUrl === appUrl + '/#_=_') {
       apiUrl =  appUrl + '/api/pics';
    } else {
       apiUrl = appUrl + '/api/' + currentUrl.split('/')[3];
    }
    
+   //call to the library for the grid-like view of the picture posts
    function masonryLoad () {
       var msnry = new Masonry(pics, {
          itemSelector: '.grid-item',
@@ -23,6 +26,7 @@
    }
    
    function heartIconClass (object, user) {
+      //returns a filled or empty heart icon depending on whether the user has liked or unliked the post
       if (object.likes.indexOf(user.socialId) >= 0) {
          return "fa-heart l" + object._id;
       } else {
@@ -31,18 +35,19 @@
    }
    
    function updateLikes (data) {
+      //updates the number of likes and the heart icon when a user click the icon
       var object = JSON.parse(data);
-      ajaxFunctions.ajaxRequest('GET', appUrl + '/api/current-user', function (user) {
+      ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', appUrl + '/api/current-user', function (user) {
          var user = JSON.parse(user);
          var heartIcon = document.querySelector('i.l' + object._id); 
          var numOfLikes = document.querySelector('.l' + object._id + ' .likes-num');
          numOfLikes.innerHTML = object.likes.length;
          heartIcon.className = 'fa ' + heartIconClass(object, user);
-      });
+      }));
    }
    
    function updatePics (data) {
-      ajaxFunctions.ajaxRequest('GET', appUrl + '/api/current-user', function (user) {
+      ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', appUrl + '/api/current-user', function (user) {
          var picsObject = JSON.parse(data);
          var counter = 0;
          var iconClass;
@@ -50,8 +55,10 @@
             var user = JSON.parse(user);
          }
          picsObject.forEach(function(item) {
+            //attach all the pictures that are received from the server side to the page one by one
             iconClass = user ? heartIconClass(item, user) : 'fa-heart-o l' + item._id;
             var newDiv = document.createElement("div");
+            //the trash icon is visible for users on their own posts
             var trashVisibility = 'hidden';
             if (user && user.socialId === item.postedId) trashVisibility = 'visible'; 
             newDiv.className = 'grid-item';
@@ -64,18 +71,20 @@
             pics.appendChild(newDiv);
             counter++;
             if (counter === picsObject.length) {
+               //Multiple calls to the masonry library to make sure the pics are loaded properly and don't overlap with each other
                masonryLoad();
                var counter2 = 0;
                var interval = setInterval(function () {
                   masonryLoad();
                   counter2++;
-                  if (counter2 === 10) {
+                  if (counter2 === 20) {
                      clearInterval(interval);
                   }
                }, 400);
             }
          });  
          
+         //delete the picture whenever the user clicks on the trash icon
          var trashes = document.querySelectorAll('.fa-trash-o');
          for (var i = 0; i < trashes.length; i++) {
             trashes[i].addEventListener('click', function () {
@@ -84,6 +93,7 @@
             });
          }
          
+         //like/unlike the picture whenever the user clicks on the heart icon
          var nonLiked = document.querySelectorAll('.fa-heart-o');
          var liked = document.querySelectorAll('.fa-heart');
          var hearts = [];
@@ -92,12 +102,12 @@
          for (var i = 0; i < hearts.length; i++) {
             hearts[i].addEventListener('click', function () {
                var id = this.className.split(' ').slice(2).join(' ').slice(1);
-               ajaxFunctions.ajaxRequest('POST', appUrl + '/api/like/' + id, updateLikes);
+               ajaxFunctions.ready(ajaxFunctions.ajaxRequest('POST', appUrl + '/api/like/' + id, updateLikes));
             });
          }
          
          document.querySelector('.my-pics').setAttribute('href', '/' + user.socialId);
-      });
+      }));
    }
 
    ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, updatePics));

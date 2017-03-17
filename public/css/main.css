@@ -38,7 +38,7 @@ a {
   position: fixed;
   right: -60em;
   top: 3.9em;
-  width: 10em;
+  width: 12em;
   background: #b0681c;
   z-index: 1;
   border: 2px solid;
@@ -72,12 +72,12 @@ a {
   width: 84%;
 }
 .grid {
-  margin: 0 auto;
+  margin: 0 auto 1em;
 }
 .grid-item { 
   margin: .36em;
   background: #ffffe6;
-  width: 12.3em;
+  width: 17em;
   text-align: center;
   box-shadow: 2.3px 2.3px 4px #888888;
 }
@@ -195,5 +195,8 @@ input {
   }
   .btn {
     display: inline-block;
+  }
+  .grid-item {
+    width: 12.3em;
   }
 }

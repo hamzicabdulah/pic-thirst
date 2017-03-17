@@ -2,7 +2,7 @@
 
 var path = process.cwd();
 
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var MainHandler = require(path + '/app/controllers/mainHandler.server.js');
 
 module.exports = function (app, passport) {
     
@@ -14,7 +14,7 @@ module.exports = function (app, passport) {
         }
     }
 
-    var clickHandler = new ClickHandler();
+    var mainHandler = new MainHandler();
 
     app.route('/')
         .get(function (req, res) {
@@ -32,29 +32,29 @@ module.exports = function (app, passport) {
         });
         
     app.route('/api/pics')
-        .get(clickHandler.getPics)
-        .post(isLoggedIn, clickHandler.postPic);
+        .get(mainHandler.getPics)
+        .post(isLoggedIn, mainHandler.postPic);
         
     app.route('/api/pic/:id')
-        .delete(clickHandler.removePic);
+        .delete(mainHandler.removePic);
         
     app.route('/api/current-user')
         .get(function (req, res)  {
             if (req.isAuthenticated()) {
                 res.json(req.user);
             } else {
-                res.send({redirect: '/'});    
+                res.send(false);    
             }
         });
         
     app.route('/:userId')
-        .get(clickHandler.checkUser);
+        .get(mainHandler.checkUser);
     
     app.route('/api/:userId')
-        .get(clickHandler.getUserPics);
+        .get(mainHandler.getUserPics);
         
     app.route('/api/like/:id')
-        .post(clickHandler.like);
+        .post(mainHandler.like);
 
     app.route('/auth/github')
         .get(passport.authenticate('github'));
