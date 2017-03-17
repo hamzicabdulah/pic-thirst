@@ -82,4 +82,9 @@ module.exports = function (app, passport) {
             successRedirect: '/',
             failureRedirect: '/'
         }));
+        
+    app.route('*')
+    .get(function(req, res) {
+      res.redirect('/');
+    });
 };
