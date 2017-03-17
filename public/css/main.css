@@ -203,13 +203,13 @@ input {
 }
 
 @media screen and (max-width : 768px) {
-  .title, .grid-item h5 {
-    transform: scale(1.3, 1.3);
+  .title {
+    font-size: 1.4em;
   }
   .grid-item h5 {
-    margin-top: .8em;
+    font-size: 1.1em;
   }
   .grid-item a, .grid-item .fa-trash-o {
-    margin-right: 2.3em;
+    margin-right: 1.8em;
   }
 }
