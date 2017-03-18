@@ -77,7 +77,7 @@
                var interval = setInterval(function () {
                   masonryLoad();
                   counter2++;
-                  if (counter2 === 20) {
+                  if (counter2 === 50) {
                      clearInterval(interval);
                   }
                }, 400);
